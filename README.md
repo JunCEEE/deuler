@@ -1,4 +1,4 @@
-# Deluer
+# Deuler
 
 TODO: Direct atomic construction by Euler angle
 
@@ -7,8 +7,8 @@ TODO: Direct atomic construction by Euler angle
 Clone the repository.
 
 ```bash
-$ git clone git@pimshpc.net:jce/deluer.git
-$ nvcc deluer.cu -o deluer
+$ git clone git@pimshpc.net:jce/deuler.git
+$ nvcc deuler.cu -o deuler
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ $ nvcc deluer.cu -o deluer
 Run this program.
 
 ```bash
-$ ./deluer inputfile OutputFileName
+$ ./deuler inputfile OutputFileName
 ```
 
 ## Contributing
