@@ -545,6 +545,7 @@ if (tag[i] == 1)
 			r[counter2].x = r[i].x;
 			r[counter2].y = r[i].y;
 			r[counter2].z = r[i].z;
+		        atom_grain[counter2] = atom_grain[i];			
 //			cout << i << " " << tag[i] << " " << counter2 << endl;
 		}
 //			else {counter3++;cout << i << " " << tag[i] << " " << counter2 << endl;}
@@ -605,12 +606,13 @@ void write_output_cfg(char* ofn)
 	ofile << "H0(3,2) = 0 A" << endl;
 	ofile << "H0(3,3) = " << lz << " A" << endl;
 	ofile << ".NO_VELOCITY." << endl;
-	ofile << "entry_count = 3" << endl;
+	ofile << "entry_count = 4" << endl;
+	ofile << "auxiliary[0] = grain" << endl;
 	ofile << "63.55" << endl;
 	ofile << "Cu" << endl;
 	for ( i = 0; i < natom; ++i)
 	{
-		ofile << setprecision(5) << r[i].x/lx <<  " " << r[i].y/ly << " " << r[i].z/lz << endl;
+		ofile << setprecision(5) << r[i].x/lx <<  " " << r[i].y/ly << " " << r[i].z/lz << " " << atom_grain[i] << endl;
 	}
 	ofile.close();
 }
