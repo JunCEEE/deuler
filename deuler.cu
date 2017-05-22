@@ -23,7 +23,6 @@ float a2; // lattice constant^2
 float lx,ly,lz; // the size of the simulation cell
 float *alpha, *beta, *gama;
 float3 *gr_centerp; // the centers of each of the grains
-float ratio = 1.0;
 float3 *r; // atom positon
 float temp,mass; // temperature, mass
 int *atom_grain, *atom_neigh;
@@ -330,6 +329,7 @@ __global__ void clean_grain_boundaries(float3 *d_r, int *d_atom_grain,int *d_ato
 			dr2 = dx*dx+dy*dy+dz*dz;
 //				if (dr2 <= 0.17*a2)
 			if (dr2 <= 0.215*a2)
+			/*if (dr2 <= 0.4761*a2)*/
 			{
 				d_tag[i] = 1;
 //				d_drlist[ii] = dr2;
@@ -352,15 +352,25 @@ void  create_sample()
 	int *d_atom_grain, *d_atom_neigh, *d_grain, *d_l1; 
 	float *d_alpha ,*d_beta ,*d_gama;
 	bool *d_atom_id;
-	nx[0] = int(-0.88*(lx/a));
-	nx[1] = int(0.88*(lx/a));
-	ny[0] = int(-0.88*(ly/a)*ratio);
-	ny[1] = int(0.88*(ly/a)*ratio);
-	nz[0] = int(-0.88*(lz/a)*ratio);
-	nz[1] = int(0.88*(lz/a)*ratio);
+	float max_box;
+	float ratio_x,ratio_y,ratio_z;
+	if (lx > ly) max_box = lx;
+	else max_box = ly;
+	if (lz > max_box)
+		max_box = lz;
+	ratio_x = max_box/lx;
+	nx[0] = int(-0.88*(lx/a)*ratio_x);
+	nx[1] = int(0.88*(lx/a)*ratio_x);
+	ratio_y = max_box/ly;
+	ny[0] = int(-0.88*(ly/a)*ratio_y);
+	ny[1] = int(0.88*(ly/a)*ratio_y);
+	ratio_z = max_box/lz;
+	nz[0] = int(-0.88*(lz/a)*ratio_z);
+	nz[1] = int(0.88*(lz/a)*ratio_z);
 	DIM.x = nx[1]-nx[0]+1;
 	DIM.y = ny[1]-ny[0]+1;
 	DIM.z = nz[1]-nz[0]+1;
+	printf("ratio.x = %f, ratio.y = %f, ratio.z = %f\n", ratio_x,ratio_y,ratio_z);
 	printf("DIM.x = %d, DIM.y = %d, DIM.z = %d\n", DIM.x, DIM.y, DIM.z);
 	if (DIM.x <10) DIM.x = 10;
 	if (DIM.y <10) DIM.y = 10;
