@@ -7,7 +7,6 @@ TODO: Direct atomic construction by Euler angle
 Clone the repository.
 
 ```bash
-$ git clone git@pimshpc.net:jce/deuler.git
 $ nvcc deuler.cu -o deuler
 ```
 
